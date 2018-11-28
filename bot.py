@@ -3,18 +3,22 @@ import json
 
 class WSSAPI:
     cookieslst=[".ASPXFORMSAUTH" ,"WSS.V4", "WSSOverlay", "_ASPNETSSOWSS","_ga","_gid","incap_ses_258_371548", "visid_incap_1560758","visid_incap_371548"]
-    username =""
+    username ="km_ni"
+    tID=""
     cookies = {}
-    cookieName = "cookies.json"
+    cookieName = "cookiesBentley.json"
 
-    def __init__(self, username):
-        self.username = username
+    def __init__(self, tournamentID=1):
+        self.tID = str(tournamentID)
 
         with open(self.cookieName) as jsonfile:
             cookieReader = json.load(jsonfile)
             for cookie in cookieReader:
                 if cookie["name"] in self.cookieslst:
                     self.cookies[cookie["name"]] = cookie["value"]
+                if cookie["name"] == self.username:
+                    self.username = cookie["value"]
+                    
         
     def buy(self, ticker, number):
         dataBuy = {
@@ -32,7 +36,7 @@ class WSSAPI:
             "Expiration": "0",
             "DateToExpire": "",
             "StrikePrice": "",
-            "TournamentID": "1",
+            "TournamentID": self.tID,
             "UserName": self.username,
             "OrderSideID": "1",
             "OrderTypeID": "1",
@@ -50,6 +54,7 @@ class WSSAPI:
             "Exchange": "US"
         }
         r = requests.post("https://www.wallstreetsurvivor.com/play/tradesecuritiesplace/", data=dataBuy, cookies=self.cookies)
+        print(r)
     
     def sell(self, ticker, number):
         dataSell ={
@@ -67,7 +72,7 @@ class WSSAPI:
             "Expiration": "0",
             "DateToExpire": "",
             "StrikePrice": "",
-            "TournamentID": "1",
+            "TournamentID": self.tID,
             "UserName": self.username, 
             "OrderSideID": "2",
             "OrderTypeID": "1",

@@ -1,3 +1,6 @@
 
-passwords.txt
-cookies.json
+/passwords.txt
+/cookies.json
+/cookiesBentley.json
+__pycache__/
+/desktop.ini
