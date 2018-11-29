@@ -1,6 +1,5 @@
 import requests
 import json
-import requests
 import re
 from re import sub
 from decimal import Decimal
